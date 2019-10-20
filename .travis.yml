@@ -1,0 +1,16 @@
+# Travis CI Configuration file
+# @link https://travis-ci.org/
+
+# Using Java for the project
+language: java
+jdk:
+  - oraclejdk11
+env:
+  global:
+    - CODECOV_TOKEN=:uuid-repo-token
+
+script:
+  # Unit and integration tests are run
+  - mvn clean verify
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
