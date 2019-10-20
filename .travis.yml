@@ -5,9 +5,6 @@
 language: java
 jdk:
   - oraclejdk11
-env:
-  global:
-    - CODECOV_TOKEN=:uuid-repo-token
 
 script:
   # Unit and integration tests are run
