@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +40,7 @@ public class WatchlistController {
         }
 
         if (itemAlreadyExists(watchlistItem.getTitle())) {
-            bindingResult.rejectValue("title", "", "This movie is already on your watchlist");
+            bindingResult.rejectValue("title", "", "Ce film est déja ajouté à votre liste");
             return new ModelAndView("watchlistItem");
         }
 
@@ -52,6 +51,7 @@ public class WatchlistController {
 
         return new ModelAndView(new RedirectView("/watchlist"));
     }
+
 
     @GetMapping("/watchlistItemForm")
     public ModelAndView showWatchlistItemForm(@RequestParam(required=false) Integer id) {
@@ -64,6 +64,22 @@ public class WatchlistController {
             model.put("watchlistItem", watchlistItem);
         }
         return new ModelAndView("watchlistItemForm" , model);
+    }
+
+    @PostMapping("/watchlistItemForm")
+    public ModelAndView submitWatchlistItemForm(@Valid WatchlistItem watchlistItem, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("watchlistItemForm");
+        }
+
+        watchlistItem.setId(WatchlistItem.index++);
+        watchlistItems.add(watchlistItem);
+
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/watchlist");
+
+        return new ModelAndView(redirectView);
     }
 
     private WatchlistItem findWatchlistItemById(Integer id) {

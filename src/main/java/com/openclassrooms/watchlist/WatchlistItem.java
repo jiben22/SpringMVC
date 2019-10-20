@@ -27,13 +27,4 @@ public class WatchlistItem {
     public WatchlistItem() {
         this.id = index ++;
     }
-
-    public WatchlistItem(String title, String rating, String priority, String comment) {
-        super();
-        this.id = index ++;
-        this.title = title;
-        this.rating = rating;
-        this.priority = priority;
-        this.comment = comment;
-    }
 }
